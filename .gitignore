@@ -1,0 +1,4 @@
+node_modules/**
+*.cjs
+test.json
+out.json
