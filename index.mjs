@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import child_process from 'node:child_process';
