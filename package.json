@@ -1,6 +1,7 @@
 {
-  "name": "json-transformer",
+  "name": "@jstarpl/json-transformer",
   "version": "0.0.1",
+  "private": "false",
   "description": "A tool to extract and transform data from JSON and JSONL files",
   "main": "index.mjs",
   "type": "module",

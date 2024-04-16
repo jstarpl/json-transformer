@@ -24,7 +24,6 @@ const changes = new Set()
 
 const config = yargs(hideBin(process.argv))
     .usage(`$0 input [options]`)
-    .epilog('If no input is provided, will read from STDIN')
     .option('process', {
         alias: 'p',
         description: 'The location of the module describing how the data should be processed. If not provided, a new file will be automatically created.'
@@ -56,7 +55,7 @@ const config = yargs(hideBin(process.argv))
         description: 'Path to an editor to use for editing and displaying files if $VISUAL and $EDITOR env variables are not defined.',
         default: 'code'
     })
-    .demandCommand(0, 1, undefined, 'Provide a single input file')
+    .demandCommand(1, 1, undefined, 'Provide a single input file')
     .parse();
 
 const EDITOR = process.env.VISUAL ?? process.env.EDITOR ?? config.editor ?? 'code'
@@ -66,7 +65,7 @@ const processFilePathFromOptions = config.process;
 const outputFilePathFromOptions = config.output;
 const dirDepth = config.dirDepth;
 
-let data = await readFromFileOrStdIn(inputFilePathFromOptions);
+let data = await readFromFile(inputFilePathFromOptions);
 let {processFilePath, processObj} = await loadOrCreateProcessFile(processFilePathFromOptions, inputFilePathFromOptions)
 
 let processedData = await processDataUsingObj(data, processObj);
@@ -99,7 +98,7 @@ function triggerProcess(processFilePath, inputFilePath) {
             signal.throwIfAborted()
             if (changes.has('data')) {
                 changes.delete('data')
-                data = await readFromFileOrStdIn(inputFilePathFromOptions);
+                data = await readFromFile(inputFilePathFromOptions);
             }
             signal.throwIfAborted()
             if (changes.has('process')) {
@@ -209,7 +208,7 @@ async function findFreeFileName(baseName, suffix, extension) {
     throw new Error(`Could not find an available filename, using base name: ${baseName}`)
 }
 
-async function readFromFileOrStdIn(filePath) {
+async function readFromFile(filePath) {
     const dataBlob = await readFile(filePath);
     return await readData(dataBlob);
 }
