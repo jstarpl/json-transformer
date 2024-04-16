@@ -1,12 +1,14 @@
 {
   "name": "@jstarpl/json-transformer",
   "version": "1.0.0",
-  "private": "false",
   "description": "A tool to extract and transform data from JSON and JSONL files",
   "main": "index.mjs",
   "type": "module",
   "bin": {
-    "jsont": "./index.mjs"
+    "jsont": "index.mjs"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "author": "Jan Starzak",
   "license": "MIT",
@@ -15,5 +17,8 @@
     "js-jsonl": "^1.1.1",
     "jsonpath-plus": "^7.2.0",
     "yargs": "^17.7.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
